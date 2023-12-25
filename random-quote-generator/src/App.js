@@ -30,7 +30,9 @@ function App() {
         <li>Explore handling asynchronous data fetching in React.</li>
       </ul>
       <p></p>
-      <blockquote>{quote}</blockquote>
+      <p></p>
+      <p></p>
+      <blockquote>"{quote}"</blockquote>
       <button onClick={fetchQuote}>Get New Quote</button>
     </div>
   );
