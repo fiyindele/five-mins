@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [formData, setFormData] = useStae({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
@@ -25,24 +25,64 @@ function App() {
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
     }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      console.log("Form submitted:", formData);
+    }
+  };
+
+  // function to handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+
+    // clear errors when the user starts typing
+    setErrors({
+      ...errors,
+      [e.target.name]: undefined,
+    });
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Simple Form Validation</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {errors.name && <p className="error">{errors.name}</p>}
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && <p className="error">{errors.email}</p>}
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {errors.password && <p className="error">{errors.password}</p>}
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 }
